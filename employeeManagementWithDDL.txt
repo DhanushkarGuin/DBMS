@@ -1,0 +1,51 @@
+-- Create the Departments table
+CREATE TABLE Departments (
+    department_id INT PRIMARY KEY,
+    department_name VARCHAR(100) UNIQUE NOT NULL,
+    location VARCHAR(100)
+);
+
+-- Create the Jobs table
+CREATE TABLE Jobs (
+    job_id INT PRIMARY KEY,
+    job_title VARCHAR(100) NOT NULL,
+    min_salary DECIMAL(10, 2) CHECK (min_salary >= 0),
+    max_salary DECIMAL(10, 2) CHECK (max_salary >= min_salary)
+);
+
+-- Create the Employees table
+CREATE TABLE Employees (
+    employee_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone_number VARCHAR(15),
+    hire_date DATE DEFAULT CURRENT_DATE,
+    job_id INT NOT NULL,
+    salary DECIMAL(10, 2) CHECK (salary >= 0),
+    department_id INT,
+    manager_id INT,
+    FOREIGN KEY (job_id) REFERENCES Jobs(job_id),
+    FOREIGN KEY (department_id) REFERENCES Departments(department_id),
+    FOREIGN KEY (manager_id) REFERENCES Employees(employee_id)
+);
+
+-- Create the Projects table
+CREATE TABLE Projects (
+    project_id INT PRIMARY KEY,
+    project_name VARCHAR(100) UNIQUE NOT NULL,
+    start_date DATE DEFAULT CURRENT_DATE,
+    end_date DATE
+);
+
+-- Create the Employee_Project table (many-to-many relationship)
+CREATE TABLE Employee_Project (
+    emp_proj_id INT PRIMARY KEY,
+    employee_id INT NOT NULL,
+    project_id INT NOT NULL,
+    role VARCHAR(50),
+    assigned_date DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (employee_id) REFERENCES Employees(employee_id),
+    FOREIGN KEY (project_id) REFERENCES Projects(project_id),
+    UNIQUE (employee_id, project_id)  -- prevent duplicate assignments
+);

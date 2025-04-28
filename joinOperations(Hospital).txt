@@ -1,0 +1,63 @@
+// Inner Join
+SELECT 
+    a.appointment_id,
+    p.name AS patient_name,
+    d.name AS doctor_name,
+    a.appointment_date,
+    a.appointment_time
+FROM 
+    Appointments a
+INNER JOIN 
+    Patients p ON a.patient_id = p.patient_id
+INNER JOIN 
+    Doctors d ON a.doctor_id = d.doctor_id;
+
+
+// Left Join
+SELECT 
+    p.name AS patient_name,
+    a.appointment_date,
+    a.appointment_time
+FROM 
+    Patients p
+LEFT JOIN 
+    Appointments a ON p.patient_id = a.patient_id;
+
+
+// Right Join
+SELECT 
+    a.appointment_id,
+    p.name AS patient_name,
+    d.name AS doctor_name
+FROM 
+    Appointments a
+RIGHT JOIN 
+    Doctors d ON a.doctor_id = d.doctor_id
+RIGHT JOIN 
+    Patients p ON a.patient_id = p.patient_id;
+
+
+// Full outer Join
+SELECT 
+    d.name AS doctor_name,
+    p.name AS patient_name,
+    a.appointment_date
+FROM 
+    Doctors d
+FULL OUTER JOIN 
+    Appointments a ON d.doctor_id = a.doctor_id
+FULL OUTER JOIN 
+    Patients p ON a.patient_id = p.patient_id;
+
+
+// Self Join
+SELECT 
+    d1.name AS doctor_1, 
+    d2.name AS doctor_2, 
+    d1.specialization
+FROM 
+    Doctors d1
+INNER JOIN 
+    Doctors d2 ON d1.department_id = d2.department_id
+WHERE 
+    d1.doctor_id != d2.doctor_id;

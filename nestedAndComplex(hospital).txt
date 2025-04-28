@@ -1,0 +1,48 @@
+// Nested 1
+SELECT 
+    name 
+FROM 
+    Patients 
+WHERE 
+    patient_id IN (
+        SELECT patient_id 
+        FROM Appointments 
+        WHERE doctor_id = 5
+    );
+
+
+// Nested 2
+SELECT 
+    doctor_id, 
+    (SELECT COUNT(*) 
+     FROM Appointments 
+     WHERE doctor_id = Doctors.doctor_id) AS num_patients
+FROM 
+    Doctors;
+
+
+// Complex 1
+SELECT 
+    d.name AS doctor_name,
+    (SELECT COUNT(*) 
+     FROM Appointments a 
+     WHERE a.doctor_id = d.doctor_id) AS num_patients
+FROM 
+    Doctors d
+HAVING 
+    num_patients > 5;
+
+
+// Complex 2
+SELECT 
+    department_id, 
+    COUNT(*) AS num_appointments
+FROM 
+    Appointments a
+JOIN 
+    Doctors d ON a.doctor_id = d.doctor_id
+GROUP BY 
+    department_id
+ORDER BY 
+    num_appointments DESC
+LIMIT 1;

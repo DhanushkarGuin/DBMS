@@ -1,0 +1,63 @@
+// Inner Join
+SELECT 
+    b.title AS book_title,
+    c.category_name,
+    a.name AS author_name
+FROM 
+    Books b
+INNER JOIN 
+    Categories c ON b.category_id = c.category_id
+INNER JOIN 
+    Authors a ON b.author_id = a.author_id;
+
+
+// Left Join
+SELECT 
+    b.title AS book_title,
+    c.category_name,
+    a.name AS author_name
+FROM 
+    Books b
+LEFT JOIN 
+    Categories c ON b.category_id = c.category_id
+LEFT JOIN 
+    Authors a ON b.author_id = a.author_id;
+
+
+// Right Join
+SELECT 
+    c.category_name,
+    b.title AS book_title
+FROM 
+    Categories c
+RIGHT JOIN 
+    Books b ON c.category_id = b.category_id;
+
+
+// Full Outer Join
+SELECT 
+    b.title AS book_title,
+    a.name AS author_name
+FROM 
+    Books b
+FULL OUTER JOIN 
+    Authors a ON b.author_id = a.author_id;
+
+
+// Self Join
+SELECT 
+    a1.name AS author_1, 
+    a2.name AS author_2,
+    c.category_name
+FROM 
+    Authors a1
+INNER JOIN 
+    Books b1 ON a1.author_id = b1.author_id
+INNER JOIN 
+    Categories c ON b1.category_id = c.category_id
+INNER JOIN 
+    Books b2 ON b1.category_id = b2.category_id
+INNER JOIN 
+    Authors a2 ON b2.author_id = a2.author_id
+WHERE 
+    a1.author_id != a2.author_id;

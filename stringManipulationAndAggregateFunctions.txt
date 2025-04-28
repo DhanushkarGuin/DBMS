@@ -1,0 +1,16 @@
+// Doctor's name with their specialization
+SELECT CONCAT(name, ' - ', specialization) AS doctor_info
+FROM Doctors;
+
+// Extracting initials of Patients
+SELECT SUBSTRING(first_name, 1, 1) AS first_initial
+FROM Patients;
+
+// Count of patients by gender
+SELECT gender, COUNT(*) AS gender_count
+FROM Patients
+GROUP BY gender;
+
+// Number of rooms available
+SELECT SUM(availability) AS total_available_rooms
+FROM Rooms;

@@ -1,0 +1,59 @@
+-- Create the Departments table
+CREATE TABLE Departments (
+    department_id INT PRIMARY KEY,
+    department_name VARCHAR(100) UNIQUE NOT NULL
+);
+
+-- Create the Doctors table
+CREATE TABLE Doctors (
+    doctor_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    specialization VARCHAR(100),
+    phone_number VARCHAR(15),
+    department_id INT,
+    FOREIGN KEY (department_id) REFERENCES Departments(department_id)
+);
+
+-- Create the Patients table
+CREATE TABLE Patients (
+    patient_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    gender CHAR(1) CHECK (gender IN ('M', 'F', 'O')),
+    date_of_birth DATE,
+    phone_number VARCHAR(15),
+    address VARCHAR(255),
+    blood_group VARCHAR(3),
+    registration_date DATE DEFAULT CURRENT_DATE
+);
+
+-- Create the Rooms table
+CREATE TABLE Rooms (
+    room_id INT PRIMARY KEY,
+    room_type VARCHAR(50) CHECK (room_type IN ('General', 'Private', 'ICU')),
+    room_number VARCHAR(10) UNIQUE NOT NULL,
+    availability BOOLEAN DEFAULT TRUE
+);
+
+-- Create the Appointments table
+CREATE TABLE Appointments (
+    appointment_id INT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    doctor_id INT NOT NULL,
+    appointment_date DATE DEFAULT CURRENT_DATE,
+    appointment_time TIME,
+    status VARCHAR(20) DEFAULT 'Scheduled' CHECK (status IN ('Scheduled', 'Completed', 'Cancelled')),
+    FOREIGN KEY (patient_id) REFERENCES Patients(patient_id),
+    FOREIGN KEY (doctor_id) REFERENCES Doctors(doctor_id)
+);
+
+-- Create the Admissions table
+CREATE TABLE Admissions (
+    admission_id INT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    room_id INT NOT NULL,
+    admission_date DATE DEFAULT CURRENT_DATE,
+    discharge_date DATE,
+    FOREIGN KEY (patient_id) REFERENCES Patients(patient_id),
+    FOREIGN KEY (room_id) REFERENCES Rooms(room_id),
+    CHECK (discharge_date IS NULL OR discharge_date >= admission_date)
+);

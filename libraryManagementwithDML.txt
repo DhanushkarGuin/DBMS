@@ -1,0 +1,32 @@
+-- Inserting data into Departments (Categories)
+INSERT INTO Categories (category_id, category_name)
+VALUES 
+(1, 'Fiction'),
+(2, 'Non-Fiction'),
+(3, 'Science');
+
+-- Inserting data into Authors
+INSERT INTO Authors (author_id, name, country)
+VALUES 
+(1, 'George Orwell', 'UK'),
+(2, 'J.K. Rowling', 'UK'),
+(3, 'Albert Einstein', 'Germany');
+
+-- Inserting data into Books
+INSERT INTO Books (book_id, title, author_id, category_id, isbn, published_year, copies_available)
+VALUES 
+(1, '1984', 1, 1, '1234567890', 1949, 5),
+(2, 'Harry Potter and the Philosopher\'s Stone', 2, 1, '0987654321', 1997, 3),
+(3, 'The Theory of Relativity', 3, 3, '1122334455', 1915, 2);
+
+-- Inserting data into Members
+INSERT INTO Members (member_id, name, email, phone_number, address)
+VALUES 
+(1, 'Alice Green', 'alice@example.com', '555-1234', '123 Maple St'),
+(2, 'Bob Blue', 'bob@example.com', '555-5678', '456 Oak Ave');
+
+-- Inserting data into Loans
+INSERT INTO Loans (loan_id, book_id, member_id, loan_date, return_date, due_date)
+VALUES 
+(1, 1, 1, '2025-04-25', '2025-05-25', '2025-05-25'),
+(2, 2, 2, '2025-04-26', '2025-05-26', '2025-05-26');

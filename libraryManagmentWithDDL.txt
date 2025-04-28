@@ -1,0 +1,48 @@
+-- Create the Members table
+CREATE TABLE Members (
+    member_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    phone_number VARCHAR(15),
+    address VARCHAR(255),
+    membership_date DATE DEFAULT CURRENT_DATE
+);
+
+-- Create the Authors table
+CREATE TABLE Authors (
+    author_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    country VARCHAR(50)
+);
+
+-- Create the Categories table
+CREATE TABLE Categories (
+    category_id INT PRIMARY KEY,
+    category_name VARCHAR(50) UNIQUE NOT NULL
+);
+
+-- Create the Books table
+CREATE TABLE Books (
+    book_id INT PRIMARY KEY,
+    title VARCHAR(150) NOT NULL,
+    author_id INT,
+    category_id INT,
+    isbn VARCHAR(20) UNIQUE,
+    published_year INT CHECK (published_year >= 1000 AND published_year <= 2100),
+    copies_available INT DEFAULT 1 CHECK (copies_available >= 0),
+    FOREIGN KEY (author_id) REFERENCES Authors(author_id),
+    FOREIGN KEY (category_id) REFERENCES Categories(category_id)
+);
+
+-- Create the Loans table
+CREATE TABLE Loans (
+    loan_id INT PRIMARY KEY,
+    book_id INT NOT NULL,
+    member_id INT NOT NULL,
+    loan_date DATE DEFAULT CURRENT_DATE,
+    return_date DATE,
+    due_date DATE NOT NULL,
+    FOREIGN KEY (book_id) REFERENCES Books(book_id),
+    FOREIGN KEY (member_id) REFERENCES Members(member_id),
+    CHECK (due_date >= loan_date)
+);
