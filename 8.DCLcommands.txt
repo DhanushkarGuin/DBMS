@@ -1,0 +1,16 @@
+GRANT INSERT, UPDATE, DELETE ON LibraryDB.Books TO 'librarian_user'@'localhost';
+
+
+REVOKE DELETE ON LibraryDB.Books FROM 'librarian_user'@'localhost';
+
+
+START TRANSACTION;
+
+INSERT INTO Borrowings (member_id, book_id, borrow_date, return_date)
+VALUES (1, 101, CURDATE(), NULL);
+
+UPDATE Books
+SET available_copies = available_copies - 1
+WHERE book_id = 101;
+
+COMMIT;

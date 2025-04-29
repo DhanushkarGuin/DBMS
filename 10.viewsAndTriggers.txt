@@ -1,0 +1,26 @@
+// VIEW
+
+CREATE OR REPLACE VIEW AvailableBooks AS
+SELECT book_id, title, author, available_copies
+FROM Books
+WHERE available_copies > 0;
+
+// Query
+SELECT * FROM AvailableBooks;
+
+//----------------------------------------------//
+// TRIGGER
+
+DELIMITER //
+
+CREATE TRIGGER DecreaseCopiesAfterBorrow
+AFTER INSERT ON Borrowings
+FOR EACH ROW
+BEGIN
+  UPDATE Books
+  SET available_copies = available_copies - 1
+  WHERE book_id = NEW.book_id;
+END;
+//
+
+DELIMITER ;
