@@ -34,3 +34,6 @@ VALUES
 UPDATE Books
 SET available_copies = available_copies + 5
 WHERE book_id = 101;
+
+DELETE FROM Books
+WHERE book_id = 101;
