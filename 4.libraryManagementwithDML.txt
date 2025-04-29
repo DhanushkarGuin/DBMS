@@ -30,3 +30,7 @@ INSERT INTO Loans (loan_id, book_id, member_id, loan_date, return_date, due_date
 VALUES 
 (1, 1, 1, '2025-04-25', '2025-05-25', '2025-05-25'),
 (2, 2, 2, '2025-04-26', '2025-05-26', '2025-05-26');
+
+UPDATE Books
+SET available_copies = available_copies + 5
+WHERE book_id = 101;
